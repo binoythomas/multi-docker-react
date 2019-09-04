@@ -5,23 +5,27 @@
       "name": "react-client",
       "image": "binoymthomas/multi-docker-react-client",
       "hostname": "client",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "node-express-server",
       "image": "binoymthomas/multi-docker-react-server",
       "hostname": "api",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "node-worker",
       "image": "binoymthomas/multi-docker-react-worker",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "nginx",
       "image": "binoymthomas/multi-docker-react-nginx",
       "essential": true,
+      "memory": 128,
       "portMappings": [
         {
           "hostPort": 80,
