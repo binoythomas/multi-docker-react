@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t binoymthomas/multi-docker-react-client-dev -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true binoymthomas/multi-docker-react-client-dev npm run test -- --coverage
+after_success:
+    - docker build -t binoymthomas/multi-docker-react-client ./client
+    - docker build -t binoymthomas/multi-docker-react-nginx ./nginx
+    - docker build -t binoymthomas/multi-docker-react-server ./server
+    - docker build -t binoymthomas/multi-docker-react-worker ./worker
+    # Login in to Docker registry
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Push images to Docker Hub
+    - docker push binoymthomas/multi-docker-react-client
+    - docker push binoymthomas/multi-docker-react-nginx
+    - docker push binoymthomas/multi-docker-react-server
+    - docker push binoymthomas/multi-docker-react-worker
