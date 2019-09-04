@@ -1,0 +1,36 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "react-client",
+      "image": "binoymthomas/multi-docker-react-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "node-express-server",
+      "image": "binoymthomas/multi-docker-react-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "node-worker",
+      "image": "binoymthomas/multi-docker-react-worker",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "binoymthomas/multi-docker-react-nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "react-client", "node-express-server"
+      ]
+    }
+  ]
+}

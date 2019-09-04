@@ -17,3 +17,16 @@ after_success:
     - docker push binoymthomas/multi-docker-react-nginx
     - docker push binoymthomas/multi-docker-react-server
     - docker push binoymthomas/multi-docker-react-worker
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "multi-docker-react"
+  env: "MultiDockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-024854438350"
+  bucket_path: "multi-docker-react"
+  on:
+    branch: master
+  access_key_id:
+    secure: "$AWS_ACCESS_KEY"
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
