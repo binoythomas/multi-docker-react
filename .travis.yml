@@ -6,17 +6,17 @@ before_install:
 script:
   - docker run -e CI=true binoymthomas/multi-docker-react-client-dev npm run test -- --coverage
 after_success:
-    - docker build -t binoymthomas/multi-docker-react-client ./client
-    - docker build -t binoymthomas/multi-docker-react-nginx ./nginx
-    - docker build -t binoymthomas/multi-docker-react-server ./server
-    - docker build -t binoymthomas/multi-docker-react-worker ./worker
+    - docker build -t binoymthomas/multi-docker-react-client:"$TRAVIS_BUILD_NUMBER" ./client
+    - docker build -t binoymthomas/multi-docker-react-nginx:"$TRAVIS_BUILD_NUMBER" ./nginx
+    - docker build -t binoymthomas/multi-docker-react-server:"$TRAVIS_BUILD_NUMBER" ./server
+    - docker build -t binoymthomas/multi-docker-react-worker:"$TRAVIS_BUILD_NUMBER" ./worker
     # Login in to Docker registry
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Push images to Docker Hub
-    - docker push binoymthomas/multi-docker-react-client
-    - docker push binoymthomas/multi-docker-react-nginx
-    - docker push binoymthomas/multi-docker-react-server
-    - docker push binoymthomas/multi-docker-react-worker
+    - docker push binoymthomas/multi-docker-react-client:"$TRAVIS_BUILD_NUMBER"
+    - docker push binoymthomas/multi-docker-react-nginx:"$TRAVIS_BUILD_NUMBER"
+    - docker push binoymthomas/multi-docker-react-server:"$TRAVIS_BUILD_NUMBER"
+    - docker push binoymthomas/multi-docker-react-worker:"$TRAVIS_BUILD_NUMBER"
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
